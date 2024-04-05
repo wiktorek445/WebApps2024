@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Pay App Homepage
+{% endblock %}
+
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+        {% if transaction_list|length > 0 %}
+            <h5>User <em>{{user.username}}</em> transactions:</h5>
+            <br>
+            <table class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Date</th>
+                    <th>Sent From</th>
+                    <th>Sent To</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for cmnt in transaction_list %}
+                    <tr>
+                        <td>{{ cmnt.id }}</td>
+                        <td>{{ cmnt.transaction_date }}</td>
+                        <td>{{ cmnt.user_sending.username }}</td>
+                        <td>{{ cmnt.user_receiving.username }}</td>
+                        <td>{{ cmnt.amount }}</td>
+                        <td>{{ cmnt.state }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <h5>There are no transactions for user: <em>{{user.username}}</em>.</h5>
+        {% endif %}
+    {% else %}
+        <h5>PayApp Homepage.</h5>
+    {% endif %}
+
+{% endblock %}
