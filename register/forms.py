@@ -17,11 +17,6 @@ class RegisterForm(UserCreationForm):
     last_name = forms.CharField(required=True)
     currency = forms.ChoiceField(choices=CURRENCY_CHOICES)
 
-    # superuser_code = forms.IntegerField(required=False, label="Admin Code",
-    #                                      help_text="The code is '1' leave blank to create regular user (this wouldn't "
-    #                                                "normally be here it's just here if you need to make an admin for "
-    #                                                "marking)")
-
     class Meta:
         model = User
         fields = (
@@ -29,11 +24,7 @@ class RegisterForm(UserCreationForm):
         )
 
     def save(self, *args, **kwargs):
-        # superuser_code = self.cleaned_data.get("superuser_code")
         instance = super(RegisterForm, self).save(*args, **kwargs)
-        # instance.is_superuser = True if superuser_code == 1 else False
-        # instance.is_staff = instance.is_superuser
-        # instance.save(*args, **kwargs)
 
         Accounts.objects.create(username=instance, amount=1000, currency=self.cleaned_data['currency'])
         return instance

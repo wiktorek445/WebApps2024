@@ -1,22 +1,14 @@
-from django.contrib.auth.decorators import user_passes_test
-from django.contrib.auth.models import User
 from django.contrib import messages
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.forms import AuthenticationForm
 from django.db.models import Q
-from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.urls import reverse
 from django.views.decorators.csrf import csrf_protect
 
 from payapp.models import Transactions
-from register.forms import RegisterForm, PromoteAdminForm
-from django.contrib.auth import login
-from django.contrib.auth.forms import AuthenticationForm
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from register.forms import PromoteAdminForm
 from register.forms import RegisterForm
-from django.contrib.auth import login, authenticate, logout
-from django.contrib import messages
-
 from register.models import Accounts
 
 
@@ -26,8 +18,6 @@ def register_user(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
-            # login(request, user)
-            # return redirect("login")
             messages.success(request, "Registration successful.")
             return redirect("login")
         else:
@@ -62,7 +52,7 @@ def login_user(request):
             return redirect("home")
         else:
             form = AuthenticationForm()
-            return render(request, "register/login.html", {"login_user": form})
+    return render(request, "register/login.html", {"login_user": form})
 
 
 def logout_user(request):
@@ -97,7 +87,6 @@ def promote_admin(request):
         else:
             messages.error(request, 'Promotion process failed')
             return redirect("admin")
-            # return render(request, 'register/admin.html', {'promote': form})
 
     else:
         form = PromoteAdminForm()

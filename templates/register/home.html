@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'baseweb.html' %}
 
 {% block title %}
     Pay App Homepage
@@ -23,14 +23,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for cmnt in transaction_list %}
+                {% for frmt in transaction_list %}
                     <tr>
-                        <td>{{ cmnt.id }}</td>
-                        <td>{{ cmnt.transaction_date }}</td>
-                        <td>{{ cmnt.user_sending.username }}</td>
-                        <td>{{ cmnt.user_receiving.username }}</td>
-                        <td>{{ cmnt.amount }}</td>
-                        <td>{{ cmnt.state }}</td>
+                        <td>{{ frmt.id }}</td>
+                        <td>{{ frmt.transaction_date }}</td>
+                        <td>{{ frmt.user_sending.username }}</td>
+                        <td>{{ frmt.user_receiving.username }}</td>
+                        <td>{{ frmt.amount }}</td>
+                        <td>{{ frmt.state }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
