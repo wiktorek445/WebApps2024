@@ -25,7 +25,7 @@ def send_money(request):
 
             if amount <= 0:
                 messages.error(request, "Invalid amount: Amount should be greater than zero.")
-                return render(request, "payapp/send_money.html", {"send_money": form})
+                return render(request, "payapp/send_mon.html", {"send_money": form})
             elif sender_account.amount >= amount:
 
                 sender_account.amount -= amount
@@ -42,13 +42,13 @@ def send_money(request):
                 return redirect("home")
             else:
                 messages.error(request, "Insufficient balance")
-                return render(request, "payapp/send_money.html", {"send_money": form})
+                return render(request, "payapp/send_mon.html", {"send_money": form})
         else:
             messages.error(request, "Transaction failed")
-            return render(request, "payapp/send_money.html", {"send_money": form})
+            return render(request, "payapp/send_mon.html", {"send_money": form})
     else:
         form = SendTransactionForm(user=request.user)
-        return render(request, "payapp/send_money.html", {"send_money": form})
+        return render(request, "payapp/send_mon.html", {"send_money": form})
 
 
 @login_required
@@ -63,7 +63,7 @@ def request_money(request):
 
             if amount <= 0:
                 messages.error(request, "Invalid amount: Amount should be greater than zero.")
-                return render(request, "payapp/request_money.html", {"request_money": form})
+                return render(request, "payapp/request_mon.html", {"request_money": form})
             else:
                 t = Transactions(user_sending=sender, user_receiving=receiver, amount=amount, state='pending')
                 t.save()
@@ -72,10 +72,10 @@ def request_money(request):
                 return redirect("home")
         else:
             messages.error(request, "Request failed")
-            return render(request, "payapp/request_money.html", {"request_money": form})
+            return render(request, "payapp/request_mon.html", {"request_money": form})
     else:
         form = RequestTransactionForm(user=request.user)
-        return render(request, "payapp/request_money.html", {"request_money": form})
+        return render(request, "payapp/request_mon.html", {"request_money": form})
 
 
 @login_required
